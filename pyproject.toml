@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "backendconverter"
+version = "0.1.0"
+description = "College project for discipline 'Web programming'"
+authors = ["darkfos82 <darkfos82@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.5"
+uvicorn = "^0.32.0"
+sqlalchemy = "^2.0.36"
+asyncpg = "^0.30.0"
+pytest = "^8.3.3"
+alembic = "^1.14.0"
+black = "^24.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
