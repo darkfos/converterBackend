@@ -7,12 +7,15 @@ from src.db import GeneralModel
 
 class UserModel(GeneralModel):
 
-    def __init__(self, email: str, name: str, password: str, avatar: str) -> None:
+    def __init__(self, email: str = None, name: str = None, password: str = None, avatar: str = None) -> None:
         self.email = email
         self.name = name
         self.hashed_password = password
         self.avatar = avatar
 
+    @staticmethod
+    async def get_name() -> str:
+        return "users"
 
     @staticmethod
     async def create_model() -> str:

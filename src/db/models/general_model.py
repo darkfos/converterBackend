@@ -19,3 +19,8 @@ class GeneralModel(ABC):
     @abstractmethod
     async def read_model(self):
         raise NotImplemented
+
+    @staticmethod
+    @abstractmethod
+    async def get_name():
+        raise NotImplemented

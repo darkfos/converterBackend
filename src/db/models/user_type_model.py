@@ -7,7 +7,7 @@ from src.db import GeneralModel
 
 class UserTypeModel(GeneralModel):
 
-    def __init__(self, name_type: str) -> None:
+    def __init__(self, name_type: str = None) -> None:
         self.name_type = name_type
 
     @staticmethod
@@ -18,6 +18,10 @@ class UserTypeModel(GeneralModel):
         name_type VARCHAR(120)
         );
         """
+
+    @staticmethod
+    async def get_name() -> str:
+        return "usertype"
 
     async def get_values(self) -> Tuple[str]:
         return (self.name_type, )

@@ -6,7 +6,7 @@ from src.db import GeneralModel
 
 class HistoryModel(GeneralModel):
 
-    def __init__(self, name_operation: str, date_operation: datetime) -> None:
+    def __init__(self, name_operation: str = None, date_operation: datetime = None) -> None:
         self.name_operation = name_operation
         self.date_operation = date_operation
 
@@ -19,6 +19,10 @@ class HistoryModel(GeneralModel):
         date_operation DATE
         );
         """
+
+    @staticmethod
+    async def get_name():
+        return "history"
 
     async def get_values(self) -> Tuple[str, datetime]:
         return (self.name_operation, self.date_operation)
