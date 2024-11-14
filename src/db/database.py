@@ -1,6 +1,10 @@
 from asyncpg import connection, Connection
 import asyncio
 
+# Local
+from src.settings import db_settings
+from src.db import UserTypeModel, UserModel, HistoryModel
+
 
 class DbEngine:
     __instance = None
@@ -19,4 +23,16 @@ class DbEngine:
         :return:
         """
 
-        self.db_async_connector: Connection = await connection.connect()
+        self.db_async_connector: Connection = await connection.connect(
+            host=db_settings.DB_HOST,
+            port=db_settings.DB_PORT,
+            user=db_settings.DB_USER,
+            password=db_settings.DB_PASSWORD,
+            database=db_settings.DB_NAME
+        )
+        await self.create_tables()
+
+    async def create_tables(self) -> None:
+        await self.db_async_connector.execute(await UserTypeModel.create_model())
+        await self.db_async_connector.execute(await UserModel.create_model())
+        await self.db_async_connector.execute(await HistoryModel.create_model())
