@@ -7,7 +7,13 @@ from src.db import GeneralModel
 
 class UserModel(GeneralModel):
 
-    def __init__(self, email: str = None, name: str = None, password: str = None, avatar: str = None) -> None:
+    def __init__(
+        self,
+        email: str = None,
+        name: str = None,
+        password: str = None,
+        avatar: str = None,
+    ) -> None:
         self.email = email
         self.name = name
         self.hashed_password = password
@@ -37,13 +43,7 @@ class UserModel(GeneralModel):
         return "(" + ", ".join(self.__dict__.keys()) + ")"
 
     def __str__(self):
-        return str({
-            k: v
-            for k, v in self.__dict__.items()
-        })
+        return str({k: v for k, v in self.__dict__.items()})
 
     async def read_model(self) -> Dict[str, str]:
-        return {
-            k: v
-            for k, v in self.__dict__.items()
-        }
+        return {k: v for k, v in self.__dict__.items()}

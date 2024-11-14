@@ -20,7 +20,7 @@ class DbEngine:
             port=db_settings.DB_PORT,
             user=db_settings.DB_USER,
             password=db_settings.DB_PASSWORD,
-            database=db_settings.DB_NAME
+            database=db_settings.DB_NAME,
         )
 
         await self.create_tables()
@@ -29,8 +29,6 @@ class DbEngine:
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.db_async_connector.close()
-
-
 
     async def create_tables(self) -> None:
         async with self.db_async_connector.acquire() as connect:

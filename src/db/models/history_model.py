@@ -4,9 +4,12 @@ from datetime import datetime
 # Local
 from src.db import GeneralModel
 
+
 class HistoryModel(GeneralModel):
 
-    def __init__(self, name_operation: str = None, date_operation: datetime = None) -> None:
+    def __init__(
+        self, name_operation: str = None, date_operation: datetime = None
+    ) -> None:
         self.name_operation = name_operation
         self.date_operation = date_operation
 
@@ -31,15 +34,7 @@ class HistoryModel(GeneralModel):
         return "(" + ", ".join(self.__dict__.keys()) + ")"
 
     def __str__(self) -> str:
-        return str(
-            {
-                k: v
-                for k, v in self.__dict__.items()
-            }
-        )
+        return str({k: v for k, v in self.__dict__.items()})
 
     async def read_model(self) -> Dict[str, Union[str, datetime]]:
-        return {
-            k: v
-            for k, v in self.__dict__.items()
-        }
+        return {k: v for k, v in self.__dict__.items()}

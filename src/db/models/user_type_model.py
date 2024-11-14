@@ -24,19 +24,13 @@ class UserTypeModel(GeneralModel):
         return "usertype"
 
     async def get_values(self) -> Tuple[str]:
-        return (self.name_type, )
+        return (self.name_type,)
 
     async def get_columns(self):
         return "(" + ", ".join(self.__dict__.keys()) + ")"
 
     def __str__(self) -> str:
-        return str({
-            k: v
-            for k, v in self.__dict__.items()
-        })
+        return str({k: v for k, v in self.__dict__.items()})
 
     async def read_model(self) -> Dict[str, str]:
-        return {
-            k: v
-            for k, v in self.__dict__.items()
-        }
+        return {k: v for k, v in self.__dict__.items()}
