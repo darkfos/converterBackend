@@ -1,5 +1,4 @@
-from asyncpg import connection, Connection, create_pool
-import asyncio
+from asyncpg import Connection, create_pool
 
 # Local
 from src.settings import db_settings

@@ -15,7 +15,11 @@ class ApiSettings:
     SALT: DescriptorSettings = DescriptorSettings()
 
     def __init__(self) -> None:
-        self.API_PORT = getenv("API_PORT")
+        self.API_PORT = int(getenv("API_PORT"))
         self.JWT_SECRET_KEY = getenv("TOKEN_KEY")
         self.JWT_REFRESH_SECRET_KEY = getenv("REFRESH_TOKEN_KEY")
         self.SALT = getenv("SALT")
+
+        # Other
+        self.title: str = "ConvertApp"
+        self.description: str = "Серверная часть веб приложения ConvertApp"

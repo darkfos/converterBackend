@@ -1,4 +1,4 @@
-from typing import Any, List, Union
+from typing import Any, Union
 from asyncpg import Pool
 
 
@@ -10,9 +10,12 @@ class GeneralRepository:
     async def add_one(self, values: tuple) -> bool:
         async with self.pool as connection:
             try:
-                stmt = f"INSERT INTO {await self.model.get_name()} {await self.model.get_columns()} VALUES {values}"
+                stmt = (
+                    f"INSERT INTO {await self.model.get_name()} "
+                    f"{await self.model.get_columns()} VALUES {values}"
+                )
                 await connection.execute(stmt)
-            except Exception as ex:
+            except Exception:
                 return False
             else:
                 return True
@@ -37,7 +40,7 @@ class GeneralRepository:
             try:
                 stmt = f"DELETE FROM {await self.model.get_name()} WHERE id = ${id_m}"
                 await connection.execute(stmt)
-            except Exception as e:
+            except Exception:
                 return False
             else:
                 return True
