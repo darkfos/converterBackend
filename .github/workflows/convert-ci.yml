@@ -1,4 +1,4 @@
-name: convert-ct
+name: convert-cш
 on: pull_request
 jobs:
   build:
