@@ -7,6 +7,7 @@ from src.api.auth import AuthService
 from src.api.auth import HashService
 from src.api.core.schemas import RegistrationUser, TokensSchema
 from src.api.dep import UOW
+from src.api.enums_sett import AuthEnum
 
 
 auth: AuthService = AuthService()
@@ -23,7 +24,7 @@ class AuthAPIService:
 
             return await uow.user_rep.add_one()
 
-    @auth(type_token="create", hash=HashService)
+    @auth(type_token=AuthEnum.CREATE.value, hash=HashService)
     @staticmethod
     async def login_user(form: OAuth2PasswordBearer, uow: UOW, tokens: Dict[str, str] = {}) -> TokensSchema:
         return TokensSchema(
@@ -31,7 +32,7 @@ class AuthAPIService:
             refresh_token = tokens["Refresh-Token"]
         )
 
-    @auth(type_token="update")
+    @auth(type_token=AuthEnum.UPDATE.value)
     @staticmethod
     async def update_token(token: str) -> str:
         return token

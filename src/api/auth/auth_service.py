@@ -6,7 +6,7 @@ from asyncpg import Record
 
 # Local
 from src.settings import api_settings
-from src.api.enums_sett import APIRoutersData
+from src.api.enums_sett import APIRoutersData, AuthEnum
 from src.db.repository.user_repository import UserRepository
 from src.api.core.exceptions import AuthExcp
 
@@ -34,14 +34,14 @@ class AuthService:
     def decode_tokens(cls, type_token: Literal["access", "refresh"], token) -> Union[Dict[str, Union[str, int]], bool]:
         try:
             match type_token:
-                case "access":
+                case AuthEnum.ACCESS.value:
                     return jwt.decode(
                         jwt=token,
                         key=api_settings.JWT_SECRET_KEY,
                         algorithms=api_settings.ALG,
                         options={"verify_exp": True}
                     )
-                case "refresh":
+                case AuthEnum.REFRESH.value:
                     return jwt.decode(
                         jwt=token,
                         key=api_settings.JWT_REFRESH_SECRET_KEY,
@@ -77,11 +77,11 @@ class AuthService:
         def func_wrapper(func: Callable):
             async def wrapper(*args, **kwargs) -> str:
                 match type_token:
-                    case "decode":
+                    case AuthEnum.DECODE.value:
                         user_data = self.decode_tokens(type_token="access", token=kwargs["token"])
                         kwargs["token_data"] = user_data
                         return func(*args, **kwargs)
-                    case "create":
+                    case AuthEnum.CREATE.value:
                         find_user: List[Record] = await UserRepository().find_user_by_email(email=kwargs["form"].username)
                         if find_user:
                             check_password = await hash.verify_password(
@@ -93,7 +93,7 @@ class AuthService:
                                 kwargs["tokens"] = tokens
                                 return await func(*args, **kwargs)
                         await AuthExcp.no_create_tokens()
-                    case "update":
+                    case AuthEnum.UPDATE.value:
                         try:
                             update_token = self.update_access_token(refresh_token=kwargs["token"])
                             kwargs["token"] = update_token["Access-Token"]
