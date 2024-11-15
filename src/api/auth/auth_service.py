@@ -1,12 +1,19 @@
 import jwt
 from typing import Dict, Final, Union, Literal
 from datetime import timedelta, datetime
+from fastapi.security import OAuth2PasswordBearer
 
 # Local
 from src.settings import api_settings
+from src.api.enums_sett import APIRoutersData
 
 
 class AuthService:
+
+    convert_auth: OAuth2PasswordBearer = OAuth2PasswordBearer(
+        tokenUrl=APIRoutersData.API_V1_PREFIX.value + APIRoutersData.AUTH_PREFIX.value + "/login",
+        description="Система аутентификации"
+    )
 
     @classmethod
     def create_tokens(cls, user_id: int) -> Union[bool, Dict[str, str]]:

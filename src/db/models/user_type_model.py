@@ -15,8 +15,10 @@ class UserTypeModel(GeneralModel):
         return """
         CREATE TABLE IF NOT EXISTS UserType (
         id SERIAL PRIMARY KEY,
-        name_type VARCHAR(120)
+        name_type VARCHAR(120) UNIQUE
         );
+        
+        INSERT INTO UserType (name_type) VALUES ('user'), ('admin') ON CONFLICT DO NOTHING
         """
 
     @staticmethod

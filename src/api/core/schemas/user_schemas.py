@@ -10,3 +10,7 @@ class UserBaseSchema(BaseModel):
 
 class AllUsersSchema(BaseModel):
     users: Annotated[List[UserBaseSchema], Field()]
+
+
+class NewUserSchema(UserBaseSchema):
+    hashed_password: Annotated[str, Field(min_length=8)]

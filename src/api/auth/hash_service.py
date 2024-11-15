@@ -5,7 +5,7 @@ class HashService:
 
     @classmethod
     async def hash_password(cls, password):
-        return bcrypt.hashpw(password=password, salt=bcrypt.gensalt())
+        return bcrypt.hashpw(password=password.encode("utf-8"), salt=bcrypt.gensalt())
 
     @classmethod
     async def verify_password(cls, password, old_password):

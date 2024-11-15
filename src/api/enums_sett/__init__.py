@@ -1,4 +1,5 @@
-__all__: list = ["APIRoutersData"]
+__all__: list = ["APIRoutersData", "UserRole"]
 
 
 from src.api.enums_sett.routers_e import APIRoutersData
+from src.api.enums_sett.enum_db import UserRole
