@@ -3,12 +3,12 @@ from typing import Annotated
 from fastapi import APIRouter, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.requests import Request
+from fastapi.responses import Response
 
 
 # Local
 from src.api.enums_sett import APIRoutersData
 from src.api.core.schemas import TokensSchema, RegistrationUser
-from src.api.auth import AuthService
 from src.api.core.services.auth_service import AuthAPIService
 from src.api.dep import UOW, IUOW
 from src.api.core.exceptions import AuthExcp
@@ -44,9 +44,15 @@ async def registration_user(
     status_code=status.HTTP_200_OK,
 )
 async def login_user(
-        request: Request,
-        form: OAuth2PasswordRequestForm = Depends()) -> TokensSchema:
-    pass
+    request: Request,
+    response: Response,
+    db_engine: Annotated[IUOW, Depends(UOW)],
+    form: OAuth2PasswordRequestForm = Depends(),
+) -> TokensSchema:
+    result = await AuthAPIService.login_user(form=form, uow=db_engine)
+    response.set_cookie("access_key", result.access_token)
+    response.set_cookie("refresh_key", result.refresh_token)
+    return result
 
 
 @auth_router.post(
@@ -57,7 +63,9 @@ async def login_user(
     status_code=status.HTTP_200_OK,
 )
 async def update_access_token(
-        request: Request,
-        token: Annotated[str, Depends(AuthService.convert_auth)]
+    request: Request,
+    response: Response
 ) -> None:
-    pass
+    new_token = await AuthAPIService.update_token(token=request.headers.get("refresh-token"))
+    response.set_cookie("access_key", new_token)
+    return None

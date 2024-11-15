@@ -1,11 +1,14 @@
 import jwt
-from typing import Dict, Final, Union, Literal
+from typing import Dict, Final, Union, Literal, Callable, List
 from datetime import timedelta, datetime
 from fastapi.security import OAuth2PasswordBearer
+from asyncpg import Record
 
 # Local
 from src.settings import api_settings
 from src.api.enums_sett import APIRoutersData
+from src.db.repository.user_repository import UserRepository
+from src.api.core.exceptions import AuthExcp
 
 
 class AuthService:
@@ -69,3 +72,35 @@ class AuthService:
             return False
         except jwt.ExpiredSignatureError:
             return False
+
+    def __call__(self, type_token: str, hash = None):
+        def func_wrapper(func: Callable):
+            async def wrapper(*args, **kwargs) -> str:
+                match type_token:
+                    case "decode":
+                        user_data = self.decode_tokens(type_token="access", token=kwargs["token"])
+                        kwargs["token_data"] = user_data
+                        return func(*args, **kwargs)
+                    case "create":
+                        find_user: List[Record] = await UserRepository().find_user_by_email(email=kwargs["form"].username)
+                        if find_user:
+                            check_password = await hash.verify_password(
+                                password=kwargs["form"].password,
+                                old_password=find_user[0].get("hashed_password")
+                            )
+                            if check_password:
+                                tokens = self.create_tokens(user_id=find_user[0].get("id"))
+                                kwargs["tokens"] = tokens
+                                return await func(*args, **kwargs)
+                        await AuthExcp.no_create_tokens()
+                    case "update":
+                        try:
+                            update_token = self.update_access_token(refresh_token=kwargs["token"])
+                            kwargs["token"] = update_token["Access-Token"]
+                            return await func(*args, **kwargs)
+                        except AttributeError:
+                            await AuthExcp.no_create_tokens()
+                    case _:
+                        return await func(*args, **kwargs)
+            return wrapper
+        return func_wrapper
