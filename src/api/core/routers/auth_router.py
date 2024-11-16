@@ -29,7 +29,7 @@ auth_router: APIRouter = APIRouter(
 async def registration_user(
     request: Request,
     db_engine: Annotated[IUOW, Depends(UOW)],
-    new_user: RegistrationUser
+    new_user: RegistrationUser,
 ) -> None:
     result = await AuthAPIService.registration_user(user_data=new_user, uow=db_engine)
     if not result:
@@ -62,10 +62,9 @@ async def login_user(
     response_model=None,
     status_code=status.HTTP_200_OK,
 )
-async def update_access_token(
-    request: Request,
-    response: Response
-) -> None:
-    new_token = await AuthAPIService.update_token(token=request.headers.get("refresh-token"))
+async def update_access_token(request: Request, response: Response) -> None:
+    new_token = await AuthAPIService.update_token(
+        token=request.headers.get("refresh-token")
+    )
     response.set_cookie("access_key", new_token)
     return None

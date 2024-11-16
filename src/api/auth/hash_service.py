@@ -9,4 +9,6 @@ class HashService:
 
     @classmethod
     async def verify_password(cls, password, old_password):
-        return bcrypt.checkpw(password=password.encode("UTF-8"), hashed_password=old_password)
+        return bcrypt.checkpw(
+            password=password.encode("UTF-8"), hashed_password=old_password
+        )

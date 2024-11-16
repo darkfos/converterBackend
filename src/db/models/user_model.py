@@ -40,7 +40,13 @@ class UserModel(GeneralModel):
         """
 
     async def get_values(self) -> Tuple[int, str, str, str, str]:
-        return (self.id_user_type, self.email, self.username, self.hashed_password, self.avatar)
+        return (
+            self.id_user_type,
+            self.email,
+            self.username,
+            self.hashed_password,
+            self.avatar,
+        )
 
     async def get_columns(self) -> str:
         return "(" + ", ".join(self.__dict__.keys()) + ")"

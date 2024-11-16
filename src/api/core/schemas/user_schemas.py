@@ -1,11 +1,11 @@
 from pydantic import BaseModel, Field
 
-from typing import Annotated, List
+from typing import Annotated, List, Union
 
 
 class UserBaseSchema(BaseModel):
     email: Annotated[str, Field(max_length=200)]
-    avatar_url: Annotated[str, Field()]
+    username: Annotated[str, Field(max_length=125)]
 
 
 class AllUsersSchema(BaseModel):
@@ -14,3 +14,8 @@ class AllUsersSchema(BaseModel):
 
 class NewUserSchema(UserBaseSchema):
     hashed_password: Annotated[str, Field(min_length=8)]
+
+
+class AllInformationAboutUser(UserBaseSchema):
+    avatar: Annotated[Union[str, bytes], Field()]
+    user_type_name: Annotated[str, Field()]

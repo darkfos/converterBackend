@@ -11,22 +11,21 @@ class GeneralRepository:
         async with self.pool as connection:
             try:
                 values = await self.model.get_values()
-                stmt = (
-                    f"INSERT INTO {await self.model.get_name()} "
-                    f"{await self.model.get_columns()} VALUES ({
-                    ", ".join(tuple(map(lambda x: "$"+str(x), range(1, len(await self.model.get_values())+1))))
-                    })"
-                )
+                stmt = f"""
+                INSERT INTO {await self.model.get_name()}
+                {await self.model.get_columns()}
+                VALUES {", ".join(tuple(map(lambda x: "$" + str(x), range(1, len(await self.model.get_values()) + 1))))} # noqa
+                """
                 await connection.execute(stmt, *values)
-            except Exception as e:
+            except Exception:
                 return False
             else:
                 return True
 
     async def get_all(self):
         async with self.pool as connection:
-            stmt = await connection.execute(
-                f"SELECT * FROM {await self.model.get_name()}"
+            stmt = await connection.fetch(
+                f"SELECT * FROM {await self.model.get_name()}", *()
             )
             return stmt
 

@@ -95,6 +95,20 @@ gssauth = ["gssapi", "sspilib"]
 test = ["distro (>=1.9.0,<1.10.0)", "flake8 (>=6.1,<7.0)", "flake8-pyi (>=24.1.0,<24.2.0)", "gssapi", "k5test", "mypy (>=1.8.0,<1.9.0)", "sspilib", "uvloop (>=0.15.3)"]
 
 [[package]]
+name = "autoflake8"
+version = "0.4.1"
+description = "Tool to automatically fix some issues reported by flake8 (forked from autoflake)."
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "autoflake8-0.4.1-py3-none-any.whl", hash = "sha256:fdf663b627993ac38e5b55b7d742c388fb2a4f34798a052f43eecc5e8d629e9d"},
+    {file = "autoflake8-0.4.1.tar.gz", hash = "sha256:c17da499bd2b71ba02fb11fe53ff1ad83d7dae6efb0f115fd1344f467797c679"},
+]
+
+[package.dependencies]
+pyflakes = ">=2.3.0"
+
+[[package]]
 name = "bcrypt"
 version = "4.2.0"
 description = "Modern password hashing for your software and your servers"
@@ -654,4 +668,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "70caaec7c2fe22253fd71f5f19396ba6c833516494961e203b19a9bd780afcc9"
+content-hash = "8afbb2dad255417188364e4a57e57153070e0ea93b43d6a927fa93c88817c9f4"

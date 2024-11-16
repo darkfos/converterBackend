@@ -21,4 +21,4 @@ class Application:
     def start_app(self) -> None:
 
         self.app.include_router(general_v1_router)
-        uvicorn.run(self.app, workers=1, port=api_settings.API_PORT)
+        uvicorn.run(self.app, workers=1, port=api_settings.API_PORT, host="0.0.0.0")

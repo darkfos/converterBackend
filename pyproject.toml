@@ -19,6 +19,7 @@ bcrypt = "^4.2.0"
 pyjwt = "^2.9.0"
 python-multipart = "^0.0.17"
 pydantic = {extras = ["email"], version = "^2.9.2"}
+autoflake8 = "^0.4.1"
 
 
 [build-system]
