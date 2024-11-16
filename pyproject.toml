@@ -15,6 +15,11 @@ pytest = "^8.3.3"
 black = "^24.10.0"
 flake8 = "^7.1.1"
 python-dotenv = "^1.0.1"
+bcrypt = "^4.2.0"
+pyjwt = "^2.9.0"
+python-multipart = "^0.0.17"
+pydantic = {extras = ["email"], version = "^2.9.2"}
+autoflake8 = "^0.4.1"
 
 
 [build-system]

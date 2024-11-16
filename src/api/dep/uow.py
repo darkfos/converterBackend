@@ -12,5 +12,7 @@ class UOW(IUOW):
         self.user_t_rep = UserTypeRepository(UserTypeModel())
         self.history_rep = HistoryRepository(HistoryModel())
 
+        return self
+
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         del self

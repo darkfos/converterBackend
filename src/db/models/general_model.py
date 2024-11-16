@@ -6,21 +6,21 @@ class GeneralModel(ABC):
     @staticmethod
     @abstractmethod
     async def create_model():
-        raise NotImplemented
+        raise NotImplementedError
 
     @abstractmethod
     async def get_values(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     @abstractmethod
     async def get_columns(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     @abstractmethod
     async def read_model(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     @staticmethod
     @abstractmethod
     async def get_name():
-        raise NotImplemented
+        raise NotImplementedError
