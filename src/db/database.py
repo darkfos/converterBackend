@@ -13,14 +13,17 @@ class DbEngine:
             cls.__instance = super().__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    async def __aenter__(self):
-        self.db_async_connector: Connection = await create_pool(
-            host=db_settings.DB_HOST,
-            port=db_settings.DB_PORT,
-            user=db_settings.DB_USER,
-            password=db_settings.DB_PASSWORD,
-            database=db_settings.DB_NAME,
-        )
+    async def __aenter__(self, url: str = None):
+        if url:
+            self.db_async_connector: Connection = await create_pool(url)
+        else:
+            self.db_async_connector: Connection = await create_pool(
+                host=db_settings.DB_HOST,
+                port=db_settings.DB_PORT,
+                user=db_settings.DB_USER,
+                password=db_settings.DB_PASSWORD,
+                database=db_settings.DB_NAME,
+            )
 
         await self.create_tables()
 
