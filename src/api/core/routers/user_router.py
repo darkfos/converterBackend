@@ -2,6 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, status, Depends
 from fastapi.params import Query
+from fastapi.responses import FileResponse
 from starlette.requests import Request
 from starlette.status import HTTP_204_NO_CONTENT
 
@@ -46,6 +47,25 @@ async def get_user_info(
     request: Request,
 ) -> AllInformationAboutUser:
     return await UserService.get_information_about_me(uow=uow, token=token)
+
+
+@user_router.get(
+    path="/get_profile_image",
+    description="""Получение изображение профиля""",
+    summary="Изображение профиля",
+    status_code=status.HTTP_200_OK,
+    response_class=FileResponse,
+)
+async def get_profile_file(
+    token: Annotated[str, Depends(AuthService.convert_auth)],
+    uow: Annotated[IUOW, Depends(UOW)],
+) -> FileResponse:
+    src_file = await UserService.get_profile_avatar(uow=uow, token=token)
+    return FileResponse(
+        path=src_file,
+        filename=src_file.split("_")[-1],
+        media_type="multipart/form-data",
+    )
 
 
 @user_router.patch(

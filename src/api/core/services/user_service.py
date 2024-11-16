@@ -1,5 +1,4 @@
 from typing import Dict, Union
-
 import asyncpg
 
 # Local
@@ -23,14 +22,26 @@ class UserService:
     async def get_all_users(uow: UOW) -> AllUsersSchema:
         async with uow:
             all_users = await uow.user_rep.get_all()
-            usersSchema = AllUsersSchema(users=[])
+            users_schema = AllUsersSchema(users=[])
             for user in all_users:
-                usersSchema.users.append(
+                users_schema.users.append(
                     UserBaseSchema(
                         email=user.get("email"), username=user.get("username")
                     )
                 )
-            return usersSchema
+            return users_schema
+
+    @auth(type_token=AuthEnum.DECODE.value)
+    @staticmethod
+    async def get_profile_avatar(
+        uow: UOW, token: str = "", token_data: Dict[str, Union[str, int]] = {}
+    ) -> str:
+        async with uow as connection:
+            user_data = await connection.user_rep.get_all_information_about_user(
+                id_user=token_data.get("sub")
+            )
+
+            return user_data[0].get("avatar")
 
     @auth(type_token=AuthEnum.DECODE.value)
     @staticmethod
@@ -45,7 +56,6 @@ class UserService:
                 if res:
                     return AllInformationAboutUser(
                         username=res[0].get("username"),
-                        avatar=res[0].get("avatar"),
                         email=res[0].get("email"),
                         user_type_name=res[0].get("name_type"),
                     )

@@ -23,14 +23,18 @@ class AuthAPIService:
     ) -> bool:
 
         # Save file
-        res_save_file: bool = await FileService.save_file(file=avatar)
+        res_save_file: bool = await FileService.save_file(
+            file=avatar, email=user_data.email
+        )
 
         if not res_save_file:
             await AuthExcp.no_reg_user()
         async with uow:
             uow.user_rep.model.username = user_data.username
             uow.user_rep.model.email = user_data.email
-            uow.user_rep.model.avatar = "src/static/images/" + avatar.filename
+            uow.user_rep.model.avatar = (
+                "src/static/images/{}_".format(user_data.email) + avatar.filename
+            )
             uow.user_rep.model.hashed_password = await HashService.hash_password(
                 password=user_data.password
             )
