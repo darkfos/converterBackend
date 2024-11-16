@@ -8,7 +8,10 @@ from src.db import GeneralModel
 class HistoryModel(GeneralModel):
 
     def __init__(
-        self, name_operation: str = None, date_operation: datetime = None, id_user: int = None
+        self,
+        name_operation: str = None,
+        date_operation: datetime = None,
+        id_user: int = None,
     ) -> None:
         self.name_operation = name_operation
         self.date_operation = date_operation

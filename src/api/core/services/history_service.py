@@ -11,14 +11,13 @@ auth: AuthService = AuthService()
 
 class HistoryService:
 
-
     @auth(type_token=AuthEnum.DECODE.value)
     @staticmethod
     async def create_history(
-            new_history: BaseHistorySchema,
-            uow: UOW,
-            token: str = "",
-            token_data: Dict[str, Union[str, int]] = {}
+        new_history: BaseHistorySchema,
+        uow: UOW,
+        token: str = "",
+        token_data: Dict[str, Union[str, int]] = {},
     ) -> bool:
         async with uow as connection:
 
@@ -31,22 +30,21 @@ class HistoryService:
             print(res)
             return res
 
-
     @auth(type_token=AuthEnum.DECODE.value)
     @staticmethod
     async def get_all_histories_for_user(
-            uow: UOW,
-            token: str = "",
-            token_data: Dict[str, Union[str, int]] = {}
+        uow: UOW, token: str = "", token_data: Dict[str, Union[str, int]] = {}
     ) -> AllHistoriesSchema:
         async with uow as connection:
-            res = await connection.history_rep.get_all_by_us_id(id_user=token_data.get("sub"))
+            res = await connection.history_rep.get_all_by_us_id(
+                id_user=token_data.get("sub")
+            )
             all_histories: AllHistoriesSchema = AllHistoriesSchema(histories=[])
             for history in res:
                 all_histories.histories.append(
                     BaseHistorySchema(
                         name_operation=history.get("name_operation"),
-                        date_operation=history.get("date_operation")
+                        date_operation=history.get("date_operation"),
                     )
                 )
             return all_histories

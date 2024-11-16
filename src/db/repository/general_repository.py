@@ -15,7 +15,8 @@ class GeneralRepository:
                 INSERT INTO {await self.model.get_name()}
                 {await self.model.get_columns()}
                 VALUES (
-                {", ".join(tuple(map(lambda x: "$" + str(x), range(1, len(await self.model.get_values()) + 1))))}
+                {", ".join(tuple(map(lambda x: "$" + str(x), range(
+                    1, len(await self.model.get_values()) + 1))))}
                 )
                 """
 

@@ -23,19 +23,18 @@ history_router: APIRouter = APIRouter(
     description="""Создание истории пользователя""",
     summary="Создание истории",
     response_model=None,
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_204_NO_CONTENT,
 )
 async def create_history(
-        new_history: BaseHistorySchema,
-        db_engine: Annotated[IUOW, Depends(UOW)],
-        token: Annotated[str, Depends(AuthService.convert_auth)],
-        request: Request
+    new_history: BaseHistorySchema,
+    db_engine: Annotated[IUOW, Depends(UOW)],
+    token: Annotated[str, Depends(AuthService.convert_auth)],
+    request: Request,
 ) -> None:
     await HistoryService.create_history(
-        new_history=new_history,
-        uow=db_engine,
-        token=token
+        new_history=new_history, uow=db_engine, token=token
     )
+
 
 @history_router.get(
     path="/get_all_user_history",
@@ -45,9 +44,9 @@ async def create_history(
     status_code=status.HTTP_200_OK,
 )
 async def get_all_user_history(
-        token: Annotated[str, Depends(AuthService.convert_auth)],
-        db_engine: Annotated[IUOW, Depends(UOW)],
-        request: Request
+    token: Annotated[str, Depends(AuthService.convert_auth)],
+    db_engine: Annotated[IUOW, Depends(UOW)],
+    request: Request,
 ) -> None:
     return await HistoryService.get_all_histories_for_user(
         uow=db_engine,
