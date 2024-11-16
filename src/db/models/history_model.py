@@ -8,18 +8,21 @@ from src.db import GeneralModel
 class HistoryModel(GeneralModel):
 
     def __init__(
-        self, name_operation: str = None, date_operation: datetime = None
+        self, name_operation: str = None, date_operation: datetime = None, id_user: int = None
     ) -> None:
         self.name_operation = name_operation
         self.date_operation = date_operation
+        self.id_user = id_user
 
     @staticmethod
     async def create_model() -> str:
         return """
         CREATE TABLE IF NOT EXISTS History (
         id SERIAL PRIMARY KEY,
+        id_user INTEGER,
         name_operation VARCHAR(255),
-        date_operation DATE
+        date_operation DATE,
+        FOREIGN KEY (id_user) REFERENCES Users (id) ON DELETE CASCADE
         );
         """
 
@@ -27,8 +30,8 @@ class HistoryModel(GeneralModel):
     async def get_name():
         return "history"
 
-    async def get_values(self) -> Tuple[str, datetime]:
-        return (self.name_operation, self.date_operation)
+    async def get_values(self) -> Tuple[str, datetime, int]:
+        return (self.name_operation, self.date_operation, self.id_user)
 
     async def get_columns(self) -> str:
         return "(" + ", ".join(self.__dict__.keys()) + ")"
