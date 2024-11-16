@@ -7,7 +7,7 @@ from src.db import GeneralRepository
 
 
 class UserRepository(GeneralRepository):
-    def __init__(self, newModel: UserModel = UserModel(), testdb = None) -> None:
+    def __init__(self, newModel: UserModel = UserModel(), testdb=None) -> None:
         self.db = DbEngine() if not testdb else testdb
         self.model = newModel
         super().__init__(model=self.model, pool=self.db)

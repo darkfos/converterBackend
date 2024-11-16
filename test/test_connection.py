@@ -4,4 +4,4 @@ import pytest
 
 @pytest.mark.asyncio
 async def test_connection(engine: Connection) -> None:
-    assert engine.is_alive() == True, "Не удалось подключиться к БД"
+    assert engine.is_alive() is True, "Не удалось подключиться к БД"

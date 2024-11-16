@@ -5,6 +5,7 @@ from typing import Final
 
 URL_DB: Final[str] = "testdb.db"
 
+
 @pytest.fixture(autouse=True, scope="session")
 async def work_db() -> None:
     yield
