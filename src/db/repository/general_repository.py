@@ -20,10 +20,8 @@ class GeneralRepository:
                 )
                 """
 
-                print(stmt)
                 await connection.execute(stmt, *values)
-            except Exception as e:
-                print(e)
+            except Exception:
                 return False
             else:
                 return True
