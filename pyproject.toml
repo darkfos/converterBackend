@@ -24,6 +24,10 @@ pytest-asyncio = "^0.24.0"
 aiosqlite = "^0.20.0"
 aiofiles = "^24.1.0"
 pdf2docx = "^0.5.8"
+docx2pdf = "^0.1.8"
+pandoc = "^2.4"
+spire-office = "^9.7.0"
+pypandoc = "^1.14"
 
 
 [build-system]

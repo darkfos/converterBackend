@@ -23,6 +23,15 @@ class FileService:
     ) -> str:
         convert_file = await ConvertService.convert_pdf_to_docx(pdf_file=file)
         if convert_file:
-            print(convert_file)
             return convert_file
         await FileExcp.no_convert_to_docx_file()
+
+    @auth(type_token=AuthEnum.DECODE.value)
+    @staticmethod
+    async def convert_file_docx_to_pdf_file(
+        file: UploadFile, token: str = "", token_data: Dict[str, Union[str, int]] = {}
+    ) -> str:
+        convert_file = await ConvertService.convert_docx_to_pdf(docx_file=file)
+        if convert_file:
+            return convert_file
+        await FileExcp.no_convert_to_pdf_file()

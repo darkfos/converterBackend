@@ -61,6 +61,29 @@ test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypo
 trio = ["trio (>=0.26.1)"]
 
 [[package]]
+name = "appscript"
+version = "1.3.0"
+description = "Control AppleScriptable applications from Python."
+optional = false
+python-versions = "*"
+files = [
+    {file = "appscript-1.3.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:c39d9fdbe92dce3c731bce4b818d1e5776d03e8b18706ee25777b7446032a061"},
+    {file = "appscript-1.3.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:11a19fdf690e359af634c32d5bec96afd3f8f5229cd2f1c332137ebcbf8fbe90"},
+    {file = "appscript-1.3.0-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:76a3507b27c78bf79af83a5f6fac49664b53d530d75632c023e53df1bd350caf"},
+    {file = "appscript-1.3.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:94ca097d672de5b8cfc82b4179b00cabd21588dbfd939347cf14a9e81955b2d5"},
+    {file = "appscript-1.3.0-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:c0b5c160908de728072d4a0ae57f286608c5d7692bfccbc6eadde868aac2742b"},
+    {file = "appscript-1.3.0-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:d2a287b81030c81017127d4fb1c24729623576c50d2ff41694476b9af3ce0a97"},
+    {file = "appscript-1.3.0-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:13094640e2694b888827d4e133f33dad1e08c9d7102b447c3cc8a73246fdab40"},
+    {file = "appscript-1.3.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:e7b4760105810e9b1ecd5b40aba7617e0a047346fb94ee4370e9d37e4383b78d"},
+    {file = "appscript-1.3.0-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:a48338f9aad0f26f6f1e1d3a90685df771966b2c4f93374f92d7d90d69f3f745"},
+    {file = "appscript-1.3.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:f40d8f82da4ac99ddacc7cf845df56c27a7fa190989fd0c1299eabfeef97add2"},
+    {file = "appscript-1.3.0.tar.gz", hash = "sha256:80943118bc97f9f78a8aa55f85565752ed4d82c7893427d7d9ebfdf401c12b2c"},
+]
+
+[package.dependencies]
+lxml = ">=4.7.1"
+
+[[package]]
 name = "asyncpg"
 version = "0.30.0"
 description = "An asyncio PostgreSQL driver"
@@ -265,6 +288,22 @@ doq = ["aioquic (>=1.0.0)"]
 idna = ["idna (>=3.7)"]
 trio = ["trio (>=0.23)"]
 wmi = ["wmi (>=1.5.1)"]
+
+[[package]]
+name = "docx2pdf"
+version = "0.1.8"
+description = "Convert docx to pdf on Windows or macOS directly using Microsoft Word (must be installed)."
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "docx2pdf-0.1.8-py3-none-any.whl", hash = "sha256:00be1401fd486640314e993423a0a1cbdbc21142186f68549d962d505b2e8a12"},
+    {file = "docx2pdf-0.1.8.tar.gz", hash = "sha256:6d2c20f9ad36eec75f4da017dc7a97622946954a6124ca0b11772875fa86fbed"},
+]
+
+[package.dependencies]
+appscript = {version = ">=1.1.0", markers = "sys_platform == \"darwin\""}
+pywin32 = {version = ">=227", markers = "sys_platform == \"win32\""}
+tqdm = ">=4.41.0"
 
 [[package]]
 name = "email-validator"
@@ -710,6 +749,20 @@ files = [
 ]
 
 [[package]]
+name = "pandoc"
+version = "2.4"
+description = "Pandoc Documents for Python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pandoc-2.4.tar.gz", hash = "sha256:ecd1f8cbb7f4180c6b5db4a17a7c1a74df519995f5f186ef81ce72a9cbd0dd9a"},
+]
+
+[package.dependencies]
+plumbum = "*"
+ply = "*"
+
+[[package]]
 name = "pathspec"
 version = "0.12.1"
 description = "Utility library for gitignore style pattern matching of file paths."
@@ -769,6 +822,48 @@ files = [
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
+
+[[package]]
+name = "plum-dispatch"
+version = "1.7.4"
+description = "Multiple dispatch in Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "plum-dispatch-1.7.4.tar.gz", hash = "sha256:1c1d15b2842b5fa98405fd3dff6fad4887bdc77b60bd200e209d76ebfe9990fe"},
+    {file = "plum_dispatch-1.7.4-py3-none-any.whl", hash = "sha256:c40dbeab269bbbf972ce0dbc078380da19ebaee1a370a2c564e1814a11bde216"},
+]
+
+[[package]]
+name = "plumbum"
+version = "1.9.0"
+description = "Plumbum: shell combinators library"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "plumbum-1.9.0-py3-none-any.whl", hash = "sha256:9fd0d3b0e8d86e4b581af36edf3f3bbe9d1ae15b45b8caab28de1bcb27aaa7f5"},
+    {file = "plumbum-1.9.0.tar.gz", hash = "sha256:e640062b72642c3873bd5bdc3effed75ba4d3c70ef6b6a7b907357a84d909219"},
+]
+
+[package.dependencies]
+pywin32 = {version = "*", markers = "platform_system == \"Windows\" and platform_python_implementation != \"PyPy\""}
+
+[package.extras]
+dev = ["coverage[toml]", "paramiko", "psutil", "pytest (>=6.0)", "pytest-cov", "pytest-mock", "pytest-timeout"]
+docs = ["sphinx (>=4.0.0)", "sphinx-rtd-theme (>=1.0.0)"]
+ssh = ["paramiko"]
+test = ["coverage[toml]", "paramiko", "psutil", "pytest (>=6.0)", "pytest-cov", "pytest-mock", "pytest-timeout"]
+
+[[package]]
+name = "ply"
+version = "3.11"
+description = "Python Lex & Yacc"
+optional = false
+python-versions = "*"
+files = [
+    {file = "ply-3.11-py2.py3-none-any.whl", hash = "sha256:096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce"},
+    {file = "ply-3.11.tar.gz", hash = "sha256:00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3"},
+]
 
 [[package]]
 name = "pycodestyle"
@@ -952,6 +1047,17 @@ files = [
 ]
 
 [[package]]
+name = "pypandoc"
+version = "1.14"
+description = "Thin wrapper for pandoc."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pypandoc-1.14-py3-none-any.whl", hash = "sha256:1315c7ad7fac7236dacf69a05b521ed2c3f1d0177f70e9b92bfffce6c023df22"},
+    {file = "pypandoc-1.14.tar.gz", hash = "sha256:6b4c45f5f1b9fb5bb562079164806bdbbc3e837b5402bcf3f1139edc5730a197"},
+]
+
+[[package]]
 name = "pytest"
 version = "8.3.3"
 description = "pytest: simple powerful testing with Python"
@@ -1030,6 +1136,33 @@ files = [
 ]
 
 [[package]]
+name = "pywin32"
+version = "308"
+description = "Python for Window Extensions"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pywin32-308-cp310-cp310-win32.whl", hash = "sha256:796ff4426437896550d2981b9c2ac0ffd75238ad9ea2d3bfa67a1abd546d262e"},
+    {file = "pywin32-308-cp310-cp310-win_amd64.whl", hash = "sha256:4fc888c59b3c0bef905ce7eb7e2106a07712015ea1c8234b703a088d46110e8e"},
+    {file = "pywin32-308-cp310-cp310-win_arm64.whl", hash = "sha256:a5ab5381813b40f264fa3495b98af850098f814a25a63589a8e9eb12560f450c"},
+    {file = "pywin32-308-cp311-cp311-win32.whl", hash = "sha256:5d8c8015b24a7d6855b1550d8e660d8daa09983c80e5daf89a273e5c6fb5095a"},
+    {file = "pywin32-308-cp311-cp311-win_amd64.whl", hash = "sha256:575621b90f0dc2695fec346b2d6302faebd4f0f45c05ea29404cefe35d89442b"},
+    {file = "pywin32-308-cp311-cp311-win_arm64.whl", hash = "sha256:100a5442b7332070983c4cd03f2e906a5648a5104b8a7f50175f7906efd16bb6"},
+    {file = "pywin32-308-cp312-cp312-win32.whl", hash = "sha256:587f3e19696f4bf96fde9d8a57cec74a57021ad5f204c9e627e15c33ff568897"},
+    {file = "pywin32-308-cp312-cp312-win_amd64.whl", hash = "sha256:00b3e11ef09ede56c6a43c71f2d31857cf7c54b0ab6e78ac659497abd2834f47"},
+    {file = "pywin32-308-cp312-cp312-win_arm64.whl", hash = "sha256:9b4de86c8d909aed15b7011182c8cab38c8850de36e6afb1f0db22b8959e3091"},
+    {file = "pywin32-308-cp313-cp313-win32.whl", hash = "sha256:1c44539a37a5b7b21d02ab34e6a4d314e0788f1690d65b48e9b0b89f31abbbed"},
+    {file = "pywin32-308-cp313-cp313-win_amd64.whl", hash = "sha256:fd380990e792eaf6827fcb7e187b2b4b1cede0585e3d0c9e84201ec27b9905e4"},
+    {file = "pywin32-308-cp313-cp313-win_arm64.whl", hash = "sha256:ef313c46d4c18dfb82a2431e3051ac8f112ccee1a34f29c263c583c568db63cd"},
+    {file = "pywin32-308-cp37-cp37m-win32.whl", hash = "sha256:1f696ab352a2ddd63bd07430080dd598e6369152ea13a25ebcdd2f503a38f1ff"},
+    {file = "pywin32-308-cp37-cp37m-win_amd64.whl", hash = "sha256:13dcb914ed4347019fbec6697a01a0aec61019c1046c2b905410d197856326a6"},
+    {file = "pywin32-308-cp38-cp38-win32.whl", hash = "sha256:5794e764ebcabf4ff08c555b31bd348c9025929371763b2183172ff4708152f0"},
+    {file = "pywin32-308-cp38-cp38-win_amd64.whl", hash = "sha256:3b92622e29d651c6b783e368ba7d6722b1634b8e70bd376fd7610fe1992e19de"},
+    {file = "pywin32-308-cp39-cp39-win32.whl", hash = "sha256:7873ca4dc60ab3287919881a7d4f88baee4a6e639aa6962de25a98ba6b193341"},
+    {file = "pywin32-308-cp39-cp39-win_amd64.whl", hash = "sha256:71b3322d949b4cc20776436a9c9ba0eeedcbc9c650daa536df63f0ff111bb920"},
+]
+
+[[package]]
 name = "sniffio"
 version = "1.3.1"
 description = "Sniff out which async library your code is running under"
@@ -1039,6 +1172,97 @@ files = [
     {file = "sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"},
     {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
 ]
+
+[[package]]
+name = "spire-barcode"
+version = "7.2.0"
+description = "A 100% standalone Barcode Python API for Processing Barcode Files"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Spire.Barcode-7.2.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:c89cb8dc45ed61704e45938ab81855bd3b5572fc01d2d8fec774434b1a117ab1"},
+    {file = "Spire.Barcode-7.2.0-py3-none-win_amd64.whl", hash = "sha256:f076489e1012090bc8036d8b57cf0cfe233963565cba2621db0e0ab6335e2def"},
+]
+
+[package.dependencies]
+plum-dispatch = "1.7.4"
+
+[[package]]
+name = "spire-doc"
+version = "12.7.1"
+description = "A 100% standalone Word Python API for Processing Word Files"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Spire.Doc-12.7.1-py3-none-macosx_10_7_universal.whl", hash = "sha256:e28741779dae5a14e2b5138a5b4a9ec5960a5d6c2d7a2973ac7347e0b8e69cf0"},
+    {file = "Spire.Doc-12.7.1-py3-none-manylinux1_x86_64.whl", hash = "sha256:68b0138f53bc4cb326a6aa904171c0e66e430337fb9ba0c3acaa74eb2ef567a5"},
+    {file = "Spire.Doc-12.7.1-py3-none-win_amd64.whl", hash = "sha256:f7cf1a82272abb41a46372bd67d71bb5b59d3062be32732275d37c471929b432"},
+]
+
+[package.dependencies]
+plum-dispatch = "1.7.4"
+
+[[package]]
+name = "spire-office"
+version = "9.7.0"
+description = "A 100% standalone Office Python API for Processing Office Files"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Spire.Office-9.7.0-py3-none-macosx_10_7_universal.whl", hash = "sha256:3dd913041df55d7896e96bed64411cb930dcd7c12f637954b002c6adecc45a51"},
+    {file = "Spire.Office-9.7.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:c2d3fc01e01c93964ab9329a6930d66f579dc6c3c4f8dd4430962a4732505bb2"},
+    {file = "Spire.Office-9.7.0-py3-none-win_amd64.whl", hash = "sha256:588924648a965b491d13b73a99b7f116c9780e775722ac9baae2f357ac58a0b2"},
+]
+
+[package.dependencies]
+"Spire.Barcode" = "7.2.0"
+"Spire.Doc" = "12.7.1"
+"Spire.Pdf" = "10.7.1"
+"Spire.Presentation" = "9.3.0"
+"Spire.Xls" = "14.7.2"
+
+[[package]]
+name = "spire-pdf"
+version = "10.7.1"
+description = "A 100% standalone Pdf Python API for Processing Pdf Files"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Spire.Pdf-10.7.1-py3-none-manylinux1_x86_64.whl", hash = "sha256:118f9fb3f25a567ede7c02c36ef150445ea7dba0a7bcfbc37d1bd249a7664b91"},
+    {file = "Spire.Pdf-10.7.1-py3-none-win_amd64.whl", hash = "sha256:80d288858fd4422f53ea7b60e8894e4c235650fc456fe0ebd7e9093e0527df80"},
+]
+
+[package.dependencies]
+plum-dispatch = "1.7.4"
+
+[[package]]
+name = "spire-presentation"
+version = "9.3.0"
+description = "A 100% standalone Power Point Python API for Processing Power Point Files"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "Spire.Presentation-9.3.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:9cfced30a0e6ac844047386126680daa14263ef9ccac875856983804994fd233"},
+    {file = "Spire.Presentation-9.3.0-py3-none-win_amd64.whl", hash = "sha256:111acdca12a9641912dd445626e1e8108a2fcf3459721978cfd3d46844fc83c6"},
+]
+
+[package.dependencies]
+plum-dispatch = "1.7.4"
+
+[[package]]
+name = "spire-xls"
+version = "14.7.2"
+description = "A 100% standalone Excel Python API for Processing Excel Files"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Spire.Xls-14.7.2-py3-none-macosx_10_7_universal.whl", hash = "sha256:c2afe17a1c12d1387cba1c13e3c2ac9946eabd0e5a78078d4ea5425a27fbf3f7"},
+    {file = "Spire.Xls-14.7.2-py3-none-manylinux1_x86_64.whl", hash = "sha256:cd13327126cfe59fd388b7fb7c73186e9321066488a2115a54931ffdf6c4da1f"},
+    {file = "Spire.Xls-14.7.2-py3-none-win_amd64.whl", hash = "sha256:1a88a5431b1a3721ce00f521662880dd6b0c8a882483f2974b08f8712076469d"},
+]
+
+[package.dependencies]
+plum-dispatch = "1.7.4"
 
 [[package]]
 name = "starlette"
@@ -1072,6 +1296,27 @@ files = [
 tests = ["pytest", "pytest-cov"]
 
 [[package]]
+name = "tqdm"
+version = "4.67.0"
+description = "Fast, Extensible Progress Meter"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tqdm-4.67.0-py3-none-any.whl", hash = "sha256:0cd8af9d56911acab92182e88d763100d4788bdf421d251616040cc4d44863be"},
+    {file = "tqdm-4.67.0.tar.gz", hash = "sha256:fe5a6f95e6fe0b9755e9469b77b9c3cf850048224ecaa8293d7d2d31f97d869a"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[package.extras]
+dev = ["pytest (>=6)", "pytest-cov", "pytest-timeout", "pytest-xdist"]
+discord = ["requests"]
+notebook = ["ipywidgets (>=6)"]
+slack = ["slack-sdk"]
+telegram = ["requests"]
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1103,4 +1348,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a9879f1f019f4b464d6563e1157159223904b6e805ec690994e7fdfaac460821"
+content-hash = "cc3fd5a1b9341ad689c0c6ccc12123650755e4e382c5f30696b72fcde0341d48"
