@@ -69,7 +69,8 @@ async def compression_file(
     token: Annotated[str, Depends(AuthService.convert_auth)],
     file: Annotated[UploadFile, File()],
 ) -> FileResponse:
-    file_path = await FileService.compression_file(token=token, file=file)
-    if file_path:
-        return FileResponse(file_path, media_type="multipart/form-data")
+    if file.filename.endswith(".pdf"):
+        file_path = await FileService.compression_file(token=token, file=file)
+        if file_path:
+            return FileResponse(file_path, media_type="multipart/form-data")
     await FileExcp.no_compression_file()

@@ -42,5 +42,5 @@ class FileService:
     async def compression_file(
         file: UploadFile, token: str = "", token_data: Dict[str, Union[str, int]] = {}
     ) -> Union[str, bool]:
-        compress = await CompressionService.compression_file(file=file)
+        compress = await CompressionService.compress_pdf_file(file=file)
         return compress
