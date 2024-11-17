@@ -4,6 +4,7 @@ from typing import Dict, Union
 
 # Local
 from src.other_services import ConvertService
+from src.other_services import CompressionService
 from src.api.auth import AuthService
 from src.api.enums_sett import AuthEnum
 from src.api.core.exceptions import FileExcp
@@ -35,3 +36,11 @@ class FileService:
         if convert_file:
             return convert_file
         await FileExcp.no_convert_to_pdf_file()
+
+    @auth(type_token=AuthEnum.DECODE.value)
+    @staticmethod
+    async def compression_file(
+        file: UploadFile, token: str = "", token_data: Dict[str, Union[str, int]] = {}
+    ) -> Union[str, bool]:
+        compress = await CompressionService.compression_file(file=file)
+        return compress

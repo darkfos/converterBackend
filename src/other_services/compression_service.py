@@ -1,0 +1,22 @@
+import zlib
+import aiofiles
+from fastapi import UploadFile
+from typing import Union
+
+# Local
+from src.other_services.cleaner_files import deletes_files
+
+
+class CompressionService:
+
+    @classmethod
+    async def compression_file(cls, file: UploadFile) -> Union[str, bool]:
+        deletes_files()
+        try:
+            new_file = zlib.compress(await file.read())
+            new_filename = f"compress_{file.filename.split('.')[0]}.zlib"
+            async with aiofiles.open(f"src/static/files/{new_filename}", "wb") as fl:
+                await fl.write(new_file)
+            return f"src/static/files/{new_filename}"
+        except Exception:
+            return False
