@@ -25,6 +25,6 @@ class FileExcp:
     @classmethod
     async def no_compression_file(cls) -> None:
         raise HTTPException(
-            detail=f"Ошибка: {APIRoutersData.FILE_ROUTER_PREFIX.value}. Не удалось сжать файл", # noqa
+            detail=f"Ошибка: {APIRoutersData.FILE_ROUTER_PREFIX.value}. Не удалось сжать файл",  # noqa
             status_code=status.HTTP_409_CONFLICT,
         )

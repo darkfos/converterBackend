@@ -28,6 +28,7 @@ docx2pdf = "^0.1.8"
 pandoc = "^2.4"
 spire-office = "^9.7.0"
 pypandoc = "^1.14"
+pypdf2 = "^3.0.1"
 
 
 [build-system]
