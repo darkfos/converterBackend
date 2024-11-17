@@ -20,6 +20,7 @@ jobs:
             python -m pip install --upgrade pip
             pip install flake8
             pip install pytest
+            pip install -r requirements.txt
 
       - name: Run linter
         run: flake8 .
