@@ -33,7 +33,7 @@ class ConvertService:
                 pypandoc.convert_file(
                     file_path,
                     to="pdf",
-                    outputfile=f"src/static/files/{docx_file.filename.split(".")[0]}.pdf", # noqa
+                    outputfile=f"src/static/files/{docx_file.filename.split(".")[0]}.pdf",  # noqa
                     extra_args=["--pdf-engine=xelatex"],
                 )
                 return f"src/static/files/{docx_file.filename.split(".")[0]}.pdf"

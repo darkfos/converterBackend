@@ -56,3 +56,20 @@ async def convert_docx_to_pdf(
 
         return FileResponse(path=file_path, media_type="multipart/form-data")
     await FileExcp.no_convert_to_pdf_file()
+
+
+@file_router.post(
+    path="/compression_file",
+    description="""Сжатие файла""",
+    summary="Сжатие файла",
+    response_class=FileResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def compression_file(
+    token: Annotated[str, Depends(AuthService.convert_auth)],
+    file: Annotated[UploadFile, File()],
+) -> FileResponse:
+    file_path = await FileService.compression_file(token=token, file=file)
+    if file_path:
+        return FileResponse(file_path, media_type="multipart/form-data")
+    await FileExcp.no_compression_file()

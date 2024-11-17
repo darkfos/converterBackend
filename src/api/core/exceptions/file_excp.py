@@ -18,6 +18,13 @@ class FileExcp:
     @classmethod
     async def no_convert_to_pdf_file(cls) -> None:
         raise HTTPException(
-            detail=f"Ошибка: {APIRoutersData.FILE_ROUTER_PREFIX.value}. Не удалось конвертировать docx файл в pdf", # noqa
+            detail=f"Ошибка: {APIRoutersData.FILE_ROUTER_PREFIX.value}. Не удалось конвертировать docx файл в pdf",  # noqa
+            status_code=status.HTTP_409_CONFLICT,
+        )
+
+    @classmethod
+    async def no_compression_file(cls) -> None:
+        raise HTTPException(
+            detail=f"Ошибка: {APIRoutersData.FILE_ROUTER_PREFIX.value}. Не удалось сжать файл", # noqa
             status_code=status.HTTP_409_CONFLICT,
         )
