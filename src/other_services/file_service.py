@@ -19,7 +19,9 @@ class FileService:
     @classmethod
     async def save_file_convert(cls, file: UploadFile) -> Union[bool, str]:
         try:
-            async with aiofiles.open("src/static/files/{}".format(file.filename), "wb") as fl:
+            async with aiofiles.open(
+                "src/static/files/{}".format(file.filename), "wb"
+            ) as fl:
                 await fl.write(file.file.read())
             return "src/static/files/{}".format(file.filename)
         except Exception:
