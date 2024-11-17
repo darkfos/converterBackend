@@ -23,3 +23,7 @@ class APIRoutersData(Enum):
     # History
     HISTORY_ROUTER_PREFIX: Final[str] = "/history"
     HISTORY_ROUTER_TAGS: Final[List[str]] = ["History"]
+
+    # File
+    FILE_ROUTER_PREFIX: Final[str] = "/file"
+    FILE_ROUTER_TAGS: Final[List[str]] = ["File"]

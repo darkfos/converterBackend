@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, UploadFile, File, Form
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.requests import Request
 from fastapi.responses import Response
+from pydantic import EmailStr, Field
 
 
 # Local
@@ -29,9 +30,16 @@ auth_router: APIRouter = APIRouter(
 async def registration_user(
     request: Request,
     db_engine: Annotated[IUOW, Depends(UOW)],
-    new_user: RegistrationUser,
+    email: Annotated[EmailStr, Field(min_length=6)] = Form(),
+    username: Annotated[str, Field(min_length=4, max_length=125)] = Form(),
+    password: Annotated[str, Field(min_length=8)] = Form(),
+    avatar: UploadFile = File(),
 ) -> None:
-    result = await AuthAPIService.registration_user(user_data=new_user, uow=db_engine)
+    result = await AuthAPIService.registration_user(
+        user_data=RegistrationUser(email=email, username=username, password=password),
+        uow=db_engine,
+        avatar=avatar,
+    )
     if not result:
         await AuthExcp.no_reg_user()
 

@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field
-
-from typing import Annotated, List, Union
+from typing import Annotated, List
 
 
 class UserBaseSchema(BaseModel):
@@ -17,5 +16,4 @@ class NewUserSchema(UserBaseSchema):
 
 
 class AllInformationAboutUser(UserBaseSchema):
-    avatar: Annotated[Union[str, bytes], Field()]
     user_type_name: Annotated[str, Field()]

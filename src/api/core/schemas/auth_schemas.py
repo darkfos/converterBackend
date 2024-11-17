@@ -11,4 +11,3 @@ class RegistrationUser(BaseModel):
     email: Annotated[EmailStr, Field(min_length=6)]
     username: Annotated[str, Field(min_length=4, max_length=125)]
     password: Annotated[str, Field(min_length=8)]
-    avatar: Annotated[str, Field()]
