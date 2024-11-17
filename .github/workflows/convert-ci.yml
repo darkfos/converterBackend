@@ -26,4 +26,6 @@ jobs:
         run: flake8 .
 
       - name: Test app
-        run: pytest .
+        run: |
+          cd test
+          pytest .
