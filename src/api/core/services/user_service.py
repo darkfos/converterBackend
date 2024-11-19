@@ -54,10 +54,12 @@ class UserService:
                     id_user=token_data.get("sub")
                 )
                 if res:
+                    print(res)
                     return AllInformationAboutUser(
                         username=res[0].get("username"),
                         email=res[0].get("email"),
                         user_type_name=res[0].get("name_type"),
+                        date_reg=res[0].get("date_reg"),
                     )
                 await UserExcp.user_not_found()
             except asyncpg.EventTriggerProtocolViolatedError:

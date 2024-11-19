@@ -52,5 +52,5 @@ class AuthAPIService:
 
     @auth(type_token=AuthEnum.UPDATE.value)
     @staticmethod
-    async def update_token(token: str) -> str:
+    async def update_token(token: str = "") -> str:
         return token

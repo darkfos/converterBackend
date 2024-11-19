@@ -1,3 +1,4 @@
+from datetime import date
 from pydantic import BaseModel, Field
 from typing import Annotated, List
 
@@ -17,3 +18,4 @@ class NewUserSchema(UserBaseSchema):
 
 class AllInformationAboutUser(UserBaseSchema):
     user_type_name: Annotated[str, Field()]
+    date_reg: Annotated[date, Field()]

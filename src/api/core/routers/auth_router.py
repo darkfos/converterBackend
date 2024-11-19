@@ -67,12 +67,10 @@ async def login_user(
     path="/update_token",
     description="""Обновление токена пользователя""",
     summary="Обновление токена",
-    response_model=None,
     status_code=status.HTTP_200_OK,
 )
-async def update_access_token(request: Request, response: Response) -> None:
+async def update_access_token(request: Request) -> dict:
     new_token = await AuthAPIService.update_token(
         token=request.headers.get("refresh-token")
     )
-    response.set_cookie("access_key", new_token)
-    return None
+    return {"access_token": new_token}
