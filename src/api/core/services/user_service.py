@@ -54,7 +54,6 @@ class UserService:
                     id_user=token_data.get("sub")
                 )
                 if res:
-                    print(res)
                     return AllInformationAboutUser(
                         username=res[0].get("username"),
                         email=res[0].get("email"),
