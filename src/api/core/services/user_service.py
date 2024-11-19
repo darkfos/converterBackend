@@ -1,5 +1,6 @@
 from typing import Dict, Union
 import asyncpg
+from fastapi import UploadFile
 
 # Local
 from src.api.dep import UOW
@@ -12,6 +13,7 @@ from src.api.core.schemas.user_schemas import (
 )
 from src.api.core.exceptions import UserExcp
 from src.api.auth import HashService
+from src.other_services import FileService
 
 auth: AuthService = AuthService()
 
@@ -78,6 +80,30 @@ class UserService:
                 id_user=token_data.get("sub"), new_password=new_password
             )
             return res
+
+    @auth(type_token=AuthEnum.DECODE.value)
+    @staticmethod
+    async def update_avatar(
+        uow: UOW,
+        new_avatar: UploadFile,
+        token: str = "",
+        token_data: Dict[str, Union[str, int]] = {},
+    ) -> bool:
+
+        # Save file
+        res_save_file: bool = await FileService.save_file(
+            file=new_avatar, email=token_data.get("sub")
+        )
+        if res_save_file:
+            async with uow:
+                avatar_is_updated = await uow.user_rep.update_avatar(
+                    id_user=token_data.get("sub"),
+                    new_avatar="src/static/images/{}_".format(token_data.get("sub"))
+                    + new_avatar.filename,
+                )
+
+                if avatar_is_updated:
+                    return True
 
     @auth(type_token=AuthEnum.DECODE.value)
     @staticmethod

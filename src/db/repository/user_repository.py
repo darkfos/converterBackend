@@ -38,3 +38,12 @@ class UserRepository(GeneralRepository):
                 return True
             except Exception:
                 return False
+
+    async def update_avatar(self, id_user, new_avatar: str) -> bool:
+        async with self.db as connection:
+            try:
+                stmt = "UPDATE users SET avatar = $1 WHERE id = $2"
+                await connection.execute(stmt, *(new_avatar, id_user))
+                return True
+            except Exception:
+                return False

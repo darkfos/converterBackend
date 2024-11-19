@@ -9,7 +9,7 @@ class FileService:
     async def save_file(cls, file: UploadFile, email: str) -> bool:
         try:
             async with aiofiles.open(
-                "src/static/images/" + email + "_" + file.filename, "wb"
+                "src/static/images/" + str(email) + "_" + file.filename, "wb"
             ) as fl:
                 await fl.write(file.file.read())
             return True

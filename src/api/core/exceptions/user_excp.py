@@ -26,6 +26,15 @@ class UserExcp:
         )
 
     @classmethod
+    async def no_update_avatar(cls) -> None:
+        raise HTTPException(
+            detail=f"""
+            {APIRoutersData.USER_ROUTER_PREFIX.value}: Не удалось обновить аватар
+            """,
+            status_code=status.HTTP_409_CONFLICT,
+        )
+
+    @classmethod
     async def no_delete_account(cls) -> None:
         raise HTTPException(
             detail=f"""

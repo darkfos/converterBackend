@@ -1,9 +1,11 @@
-from typing import Annotated
+import base64
 
-from fastapi import APIRouter, status, Depends
+from typing import Annotated
+import aiofiles
+from fastapi import APIRouter, status, Depends, UploadFile, File
 from fastapi.params import Query
-from fastapi.responses import FileResponse
 from starlette.requests import Request
+from starlette.responses import JSONResponse
 from starlette.status import HTTP_204_NO_CONTENT
 
 # Local
@@ -54,17 +56,18 @@ async def get_user_info(
     description="""Получение изображение профиля""",
     summary="Изображение профиля",
     status_code=status.HTTP_200_OK,
-    response_class=FileResponse,
+    response_class=JSONResponse,
 )
 async def get_profile_file(
     token: Annotated[str, Depends(AuthService.convert_auth)],
     uow: Annotated[IUOW, Depends(UOW)],
-) -> FileResponse:
+) -> JSONResponse:
     src_file = await UserService.get_profile_avatar(uow=uow, token=token)
-    return FileResponse(
-        path=src_file,
-        filename=src_file.split("_")[-1],
-        media_type="multipart/form-data",
+    async with aiofiles.open(src_file, "rb") as fl:
+        base64_string = base64.b64encode(await fl.read()).decode("UTF-8")
+    img_type = src_file[src_file.rindex(".") + 1 :]
+    return JSONResponse(
+        content={"image": f"data:image/{img_type};base64,{base64_string}"}
     )
 
 
@@ -87,6 +90,23 @@ async def update_username(
     if res:
         return
     await UserExcp.no_update_password()
+
+
+@user_router.patch(
+    path="/update_user_avatar",
+    description="""Обновление аватара пользователя""",
+    summary="Обновление аватара",
+    status_code=status.HTTP_204_NO_CONTENT,
+    response_model=None,
+)
+async def update_user_avatar(
+    token: Annotated[str, Depends(AuthService.convert_auth)],
+    uow: Annotated[IUOW, Depends(UOW)],
+    new_avatar: Annotated[UploadFile, File()],
+) -> None:
+    res = await UserService.update_avatar(token=token, uow=uow, new_avatar=new_avatar)
+    if not res:
+        await UserExcp.no_update_avatar()
 
 
 @user_router.delete(
