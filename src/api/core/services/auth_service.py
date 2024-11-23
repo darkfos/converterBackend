@@ -50,7 +50,7 @@ class AuthAPIService:
             access_token=tokens["Access-Token"], refresh_token=tokens["Refresh-Token"]
         )
 
-    @auth(type_token=AuthEnum.UPDATE.value)
+    @auth(type_token=AuthEnum.UPDATE.value, is_refresh=True)
     @staticmethod
     async def update_token(token: str = "") -> str:
         return token

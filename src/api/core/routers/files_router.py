@@ -1,7 +1,9 @@
+import io
 from typing import Annotated
-
+import aiofiles
 from fastapi import APIRouter, UploadFile, File, status, Depends
 from fastapi.responses import FileResponse
+from starlette.responses import StreamingResponse
 
 from src.api.core.exceptions import FileExcp
 
@@ -33,7 +35,8 @@ async def convert_pdf_to_docx(
             file=file_pdf, token=token
         )
         return FileResponse(
-            path="src/static/files/" + file_path, media_type="multipart/form-data"
+            path="src/static/files/" + file_path,
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",  # noqa
         )
     await FileExcp.no_convert_to_docx_file()
 
@@ -62,15 +65,23 @@ async def convert_docx_to_pdf(
     path="/compression_file",
     description="""Сжатие файла""",
     summary="Сжатие файла",
-    response_class=FileResponse,
+    response_class=StreamingResponse,
     status_code=status.HTTP_201_CREATED,
 )
 async def compression_file(
     token: Annotated[str, Depends(AuthService.convert_auth)],
     file: Annotated[UploadFile, File()],
-) -> FileResponse:
+) -> StreamingResponse:
     if file.filename.endswith(".pdf"):
         file_path = await FileService.compression_file(token=token, file=file)
         if file_path:
-            return FileResponse(file_path, media_type="multipart/form-data")
+            async with aiofiles.open(file_path, "rb") as file:
+                file = await file.read()
+                return StreamingResponse(
+                    io.BytesIO(file),
+                    media_type="application/pdf",
+                    headers={
+                        "Content-Disposition": "attachment; filename=compressed.pdf"
+                    },
+                )
     await FileExcp.no_compression_file()

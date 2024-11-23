@@ -95,13 +95,14 @@ class AuthService:
         except jwt.ExpiredSignatureError:
             return False
 
-    def __call__(self, type_token: str, hash=None):
+    def __call__(self, type_token: str, hash=None, is_refresh: bool = False):
         def func_wrapper(func: Callable):
             async def wrapper(*args, **kwargs) -> str:
                 match type_token:
                     case AuthEnum.DECODE.value:
                         user_data = self.decode_tokens(
-                            type_token="access", token=kwargs["token"]
+                            type_token=f"{'access' if not is_refresh else 'refresh'}",
+                            token=kwargs["token"],
                         )
                         if not user_data:
                             await AuthExcp.no_decode_tokens()

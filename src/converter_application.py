@@ -15,9 +15,7 @@ class Application:
             title=api_settings.title, description=api_settings.description
         )
         self.origins: list[str] = [
-            "http://localhost:7565",
-            "http://localhost:8080",
-            "*",
+            "http://localhost:3000",
         ]
 
     async def include_routers(self, routers: List[APIRouter]):
@@ -34,4 +32,4 @@ class Application:
             allow_methods=["*"],
             allow_headers=["*"],
         )
-        uvicorn.run(self.app, workers=1, port=api_settings.API_PORT, host="0.0.0.0")
+        uvicorn.run(self.app, port=api_settings.API_PORT, host="0.0.0.0")

@@ -6,12 +6,6 @@ from src.db import UserTypeModel, UserModel, HistoryModel
 
 
 class DbEngine:
-    __instance = None
-
-    def __new__(cls, *args, **kwargs) -> None:
-        if cls.__instance is None:
-            cls.__instance = super().__new__(cls, *args, **kwargs)
-        return cls.__instance
 
     async def __aenter__(self, url: str = None):
         if url:
@@ -23,6 +17,7 @@ class DbEngine:
                 user=db_settings.DB_USER,
                 password=db_settings.DB_PASSWORD,
                 database=db_settings.DB_NAME,
+                timeout=120,
             )
 
         await self.create_tables()

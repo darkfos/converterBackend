@@ -34,9 +34,18 @@ class ConvertService:
                     file_path,
                     to="pdf",
                     outputfile=f"src/static/files/{docx_file.filename.split(".")[0]}.pdf",  # noqa
-                    extra_args=["--pdf-engine=xelatex"],
+                    extra_args=[
+                        "--pdf-engine=xelatex",
+                        "-V",
+                        "mainfont=DejaVu Sans",
+                        "-V",
+                        "CJKmainfont=DejaVu Sans",
+                        "--variable",
+                        "geometry:margin=1in",
+                    ],
                 )
                 return f"src/static/files/{docx_file.filename.split(".")[0]}.pdf"
             return False
-        except RuntimeError:
+        except RuntimeError as r:
+            print(r)
             return False
